@@ -78,7 +78,7 @@ module.exports = {
             in: 'header',
             schema: {
               type: 'string',
-              default: 'shhhhh'
+              default: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o'
             },
             required: true
           }
@@ -120,7 +120,7 @@ module.exports = {
             in: 'header',
             schema: {
               type: 'string',
-              default: 'shhhhh'
+              default: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o'
             },
             required: true
           }

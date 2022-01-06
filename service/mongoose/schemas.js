@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// const openApiDocumentation = require('./service/api-especification/open-api-doc');
 
 const pageHistorySchema = mongoose.Schema({
     checkpoint: String,
@@ -13,32 +12,95 @@ const pageHistorySchema = mongoose.Schema({
     date: Date
 });
 
-//Classes and Objects object is an instance of that blueprint
-//Pagehistory pagehistory
-
-//this is a class not an object
-const PageHistory = mongoose.model('PageHistory', pageHistorySchema);
-
-async function createPageHistory(){
+async function createPageHistory() {
 
     const pageHistory = new PageHistory({
-        checkpoint: 'ancillary',
+        checkpoint: 'cover',
         details: {
             identifier: 'PAGE_VIEW',
-            pageName: 'ancillary',
+            pageName: 'cover',
             quoteNumber: '4488574384',
-            serviceCalled: ''
+            product: 'motor',
+            flowName: 'acceptance'
         },
-        sessionId: 'MENCODMwRkI4NzgyNDU0Nzk5QkI0NjJBMEJGMzc0Mjg6OEUwNjM3ODM4Njg0NDEzQkE2RkZBQ0Y4RDc1MjA5M0I'
+        sessionId: 'NDE2MTc2RjE0M0RCNDc0NTg2QTQ3NjdFQzQ4RUYwN0M6QzhGNzlDMjM1QkVFNDc5NUI3MEQwMUI1RTM1RTY1ODA'
     });
 
-    const result = await pageHistory.save();
-    console.log(result);
+    try {
+        const result = await pageHistory.save();
+        return result;
+    }
+    catch (ex) {
+        return ex.message;
+    }
+
 }
 
-async function getPageHistories(){
-    const pageHistory = await PageHistory.find({});
-    console.log(pageHistory);
+async function getPageHistories() {
+
+    //COMPARISON OPERATORS
+    // eq (equal)
+    //ne (not equal)
+    //gt (greater than)
+    //gte (greater than or equal to)
+    //lt (less than)
+    //lte (less than or equal to)
+    //in
+    //nin (not in)
+
+    //LOGICAL OPERATORS
+    //or
+    //and
+
+    const pageHistory = await PageHistory.find();
+        // .find({ checkpoint: 'cover' })
+        // .find({ price: { $gte: 10, $lte: 20 } })
+        // .find({ price: { $in: [10, 15, 20] } })
+        
+        // .or([ { checkpoint: 'cover'} ])
+        // .and([  ])
+        //starts with cover
+        // .find({ author: /^cover/})
+        // //ends with cover
+        // .find({ author: /cover$/i})
+        // //contains cover
+        // .find({ author: /.*cover.*/i})
+        // .skip((pageNumner = 1) * pageSize)
+        // .limit(10)
+        // .sort({ checkpoint: 1 })
+        //.select({ checkpoint: 1, details: { indetifier: 1 } })
+        //.count()
+        console.log('pagehistories: ', pageHistory);
+    return pageHistory;
 }
 
-module.export = createPageHistory;
+async function updatePageHistory(id) {
+    // const pageHistory = await PageHistory.findById(id);
+    // if(!pageHistory) return;
+    // pageHistory.details.quoteNumber = '4488574383';
+
+    // const result = await pageHistory.save();
+
+    // console.log('Updated record: ',result);
+
+    const pageHistory = await PageHistory.updateOne({ _id: id }, {
+        $set: {
+            checkpoint: 'ancillary',
+            details: {
+                identifier: 'PAGE_VIEW',
+                pageName: 'ancillary',
+                quoteNumber: '4488574384',
+                serviceCalled: ''
+            }
+        }
+    });
+
+    console.log('Update: ', pageHistory);
+}
+
+async function removePageHistory(id) {
+    const result = await PageHistory.deleteOne({ _id: id });
+    console.log('delete: ', result);
+}
+
+module.export = pageHistorySchema;
