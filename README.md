@@ -28,29 +28,91 @@ This section should list any major frameworks that you built your project using.
 
 - [Node](https://nodejs.org/en/)
 - [Express](https://expressjs.com/)
+- [Mocha](https://mochajs.org/)
 
-## Setup
+## App skeleton
+```
+├── config
+│   ├── constants.js
+│   ├── custom-environment-variables.json
+│   ├── default.json
+│   ├── development.json
+│   ├── production.json
+├── src
+│   ├── api-specification
+│   │   ├── open-api-doc.js
+│   ├── middleware
+│   │   ├── auth.js
+│   │   ├── logger.js
+│   ├── public 
+│   │   ├── readme.txt
+│   ├── routes 
+│   │   ├── pagehistories.js
+├── test
+│   ├── api.js
+├── .gitignore
+├── containerization.md
+├── index.js
+├── package-lock.json
+├── package.json
+├── README.md
+├── sonar-project.properties
+```
 
 ## Prerequisites
 
-1. Node 12+ (raw files can be found on [nexus](https://nexus3.bolt.admiral.uk/#browse/browse:build-binaries:org%2Fnodejs) - make sure the files are added to your [path](#adding-software-to-your-path) )
+1. Node 14+ (raw files can be found on [nexus](https://nexus3.bolt.admiral.uk/#browse/browse:build-binaries:org%2Fnodejs) - make sure the files are added to your [path](#adding-software-to-your-path) )
 2. C: drive access
 3. Git installed
 4. Git access (you should have this automatically through your profile)
 
 ## Steps
 
-1. Follow the admiral setup guide until you have added a SSH key [guide](https://confluence.admiral.uk:8443/display/IKB/How+to+clone+a+Git+Repository+from+Admiral%27s+GitHub+Enterprise+Server+-+pr-ghub.admiral.uk#HowtocloneaGitRepositoryfromAdmiral'sGitHubEnterpriseServer-pr-ghub.admiral.uk-Set-upGitBash)
-2. Clone the repository using SSH by selecting `Clone or download` from the main repository page - (You can swap by pressing between HTTPS and SSH by using the `Use SSH` hyperlink)
+1.	npm install. It’s likely you might get some proxy 500 Error due to the package is not in Nexus.
 
-3. Change directory to the cloned repository
-4. Run `npm i`
-5. Use the following command to set up different config values `export NODE_ENV=production` or `export DEBUG=app:startup`
+2.	npm run start. It will run the service at port 3000, you can define another your own port using the following command:
+export PORT=9000. 
+
+3.	Go to localhost:3000/api-docs to navigate to Swagger documentation, see the routes available, methods, parameters and test the different request with predefine values.
+
+4.	npm standard. It will run the standard package to give you all the things that you should modify in your JS files.
+
+5.	To run SonarQube locally you’ll need to follow the next steps:
+
+a.	Download community edition from the following link: https://www.sonarqube.org/downloads/
+
+b.	Go to folder for 64-bit OS move to windows-x86–64	.
+
+c.	Run StartSonar.bat and after few minutes it will start your SonarQube server. Make sure you have Java installed in your machine. 
+
+d.	Open browser and http://localhost:9000/ (9000 is default) you will be navigated to below window. 
+
+e.	You can login using default user and password (admin : admin).
+
+f.	Download Sonar Scanner from the following link: https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/
+
+g.	Unzip the file (sonar-scanner-3.2.0.1227-windows) and navigate to its bin folder and add Path to environment variables of system.
+ 
+h.	Navigate to config folder of sonar scanner (C:\Users\MORATAE\APPS\sonar-scanner-4.6.2.2472-windows\conf), open the file sonar-scanner.
+
+properties and change and add the following properties:
+
+sonar.host.url=http://localhost:9000
+sonar.projectKey=sonar-scanner
+sonar.sources= C:\Users\{USERNAME}\GITHUB\node-microservice-template
+sonar.login=admin
+sonar.password=admin
+
+i.	Now navigate to the Project folder of you code you want to scan (C:\Users\{USERNAME}\GITHUB\node-microservice-template) open command prompt on this location and run command sonar-scanner.bat.
+
+j.	After successful analysis you will see it has posted the result to your SonarQube server http://locathost:9000/ with new project inside it. 
 
 
 ### Optional
 
-Additional plugins to deal with Open API [vscode-openapi](https://github.com/42Crunch/vscode-openapi)
+Additional plugin to deal with Open API [vscode-openapi](https://github.com/42Crunch/vscode-openapi)
+
+Addtional plugin to help increase quality of code by enforcing certain rules in your code [dbaeumer.vscode-eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 
 #### Running the default application (quote engine)
 
@@ -60,15 +122,26 @@ Run `npm start` to start the default application.
 
 To stop the server the easiest way is to send a kill signal `SIGINT` using the `CTRL+C` shortcut key in the terminal that is running the server.
 
+#### Getting a new JWT token
+
+To create valid requests (GET/POTS) you need to provide a valid JWT token using this page: https://jwt.io/.
+To verify signature you must provide the word 'secret'.
+
 ### Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test` to execute the unit tests via [Mochajs](https://mochajs.org/).
+
+### Running Linting
+
+Run `ng lintfix` to run lint fixes [eslint](https://eslint.org/).
 
 ## Tutorials Further help
 
 [Article showing how to use Open API and Swagger](https://medium.com/wolox/documenting-a-nodejs-rest-api-with-openapi-3-swagger-5deee9f50420)
 
 [Interactive tutorial to understand Node](https://www.youtube.com/watch?v=TlB_eWDSMt4&t=1s)
+
+[Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html)
 
 ## Git process
 
